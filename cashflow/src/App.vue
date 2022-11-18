@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <Suspense>
-      <template #default>
-        <HomePage />
-      </template>
-      <template #fallback>
-        <SplashScreen />
-      </template>
-    </Suspense>
-  </div>
+  <Suspense>
+    <template #default>
+      <HomePage />
+    </template>
+    <template #fallback>
+      <SplashScreen />
+    </template>
+  </Suspense>
 </template>
 
 <script>

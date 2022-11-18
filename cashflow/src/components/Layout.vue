@@ -1,11 +1,23 @@
 <template>
-    <div>
-        <slot name="header"></slot>
+<div class="header">
+    <slot name="header"></slot>
+</div>
+<div class="resume">
+    <slot name="resume"></slot>    
+</div>
+<div class="movements">
+    <div class="head" @click="showMovements = !showMovements">
+        <div class="grip"></div>
     </div>
+    <div class="body" v-show="showMovements">
+        <slot name="movements"></slot>
+    </div>
+</div>
 </template>
 
-<script>
-
+<script setup>
+import { ref } from "vue";
+const showMovements = ref(false);
 </script>
 
 <style scoped>
@@ -17,10 +29,12 @@
   align-items: center;
   padding: 14px 0;
   box-sizing: border-box;
+  
 }
 .header {
   position: fixed;
   width: 100vw;
+  
 }
 .resume {
   min-height: 100vh;
@@ -42,6 +56,7 @@
   padding: 24px;
   width: 100%;
   box-sizing: border-box;
+  cursor: pointer;
 }
 .movements .body {
   height: 75vh;
@@ -52,5 +67,11 @@
   height: 8px;
   background-color: #e5e5e5;
   border-radius: 4px;
+  transition: all 0.3s ease;
+
 }
+.movements .head:hover .grip {
+  background-color: #0689b0;
+}
+
 </style>
