@@ -1,18 +1,19 @@
 <template>
-<div class="header">
+  <div class="header">
     <slot name="header"></slot>
-</div>
-<div class="resume">
-    <slot name="resume"></slot>    
-</div>
-<div class="movements">
+  </div>
+  <div class="resume">
+    <slot name="resume"></slot>
+  </div>
+  <div class="movements">
     <div class="head" @click="showMovements = !showMovements">
-        <div class="grip"></div>
+    <!-- if showMovements is true color the grip blue -->
+      <div class="grip" :class="{ gripBlue: showMovements }"></div>
     </div>
     <div class="body" v-show="showMovements">
-        <slot name="movements"></slot>
+      <slot name="movements"></slot>
     </div>
-</div>
+  </div>
 </template>
 
 <script setup>
@@ -29,12 +30,10 @@ const showMovements = ref(false);
   align-items: center;
   padding: 14px 0;
   box-sizing: border-box;
-  
 }
 .header {
   position: fixed;
   width: 100vw;
-  
 }
 .resume {
   min-height: 100vh;
@@ -46,7 +45,7 @@ const showMovements = ref(false);
   bottom: 0;
   width: 100vw;
   background-color: white;
-  box-shadow: 0 -8px 16px #e5e5e5;
+  box-shadow: 0 -8px 16px #0688b050;
   border-radius: 24px;
 }
 .movements .head {
@@ -68,10 +67,11 @@ const showMovements = ref(false);
   background-color: #e5e5e5;
   border-radius: 4px;
   transition: all 0.3s ease;
-
 }
 .movements .head:hover .grip {
   background-color: #0689b0;
 }
-
+.movements .head .gripBlue {
+  background-color: #0689b0;
+}
 </style>

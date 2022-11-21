@@ -14,10 +14,7 @@
 </template>
 
 <script>
-
-const currencyFormater = new Intl.NumberFormat(("es-MX"), {
-  style: "currency", currency: "MXN"
-})
+import currencyFormatter from "@/hooks/currencyFormat"
 
 export default {
   props: {
@@ -45,7 +42,7 @@ export default {
       return this.amount !== null ? this.amount : this.totalAmount;
     },
     amountCurrency() {
-      return currencyFormater.format(this.showAmounts);
+      return currencyFormatter.format(this.showAmounts);
     },
   },
 };
