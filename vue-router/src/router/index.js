@@ -1,8 +1,12 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  createWebHashHistory,
+} from "vue-router";
 import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
     {
       //redirect to home if some link is not found
@@ -14,6 +18,9 @@ const router = createRouter({
       name: "home",
       component: HomeView,
       alias: "/home",
+      meta: {
+        requiresAuth: false,
+      },
     },
     {
       path: "/session",
@@ -37,6 +44,9 @@ const router = createRouter({
       path: "/chats",
       name: "chats",
       component: () => import("../views/ChatsView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
       children: [
         {
           path: ":id",
@@ -47,6 +57,22 @@ const router = createRouter({
       ],
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  console.log("beforeEach");
+  console.log(to);
+  console.log(from);
+
+  if (to.meta?.requiresAuth) {
+    console.log("requiresAuth" + to.path);
+
+    next({ name: "session" });
+
+    return;
+  }
+  next();
+  return;
 });
 
 export default router;
