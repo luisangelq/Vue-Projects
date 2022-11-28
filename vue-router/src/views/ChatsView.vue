@@ -15,8 +15,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { RouterLink, RouterView } from "vue-router";
+import { ref, watchEffect } from "vue";
+import { RouterLink, RouterView, useRoute } from "vue-router";
+
+const route = useRoute();
 
 const chats = ref([
   { id: 1, name: "Luis" },
@@ -24,4 +26,8 @@ const chats = ref([
   { id: 3, name: "Gaby" },
   { id: 4, name: "Roberto" }
 ]);
+
+watchEffect(() => {
+  console.log(route.params);
+});
 </script>

@@ -5,13 +5,21 @@ import {
 } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 
+const stage = import.meta.env.DEV;
+
+console.log("stage", stage);
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
+      path: "/404",
+      component: () => import("../views/404View.vue"),
+    },
+    {
       //redirect to home if some link is not found
-      path: "/:pathMatch(.*)*",
-      redirect: { name: "home" },
+      path: "/:catchAll(.*)",
+      redirect: "/404",
     },
     {
       path: "/",
@@ -45,11 +53,11 @@ const router = createRouter({
       name: "chats",
       component: () => import("../views/ChatsView.vue"),
       meta: {
-        requiresAuth: true,
+        requiresAuth: false,
       },
       children: [
         {
-          path: ":id",
+          path: ":id(\\d+)",
           component: () => import("../views/ChatView.vue"),
           //props: true,
           props: (route) => ({ id: route.params.id }),
@@ -58,6 +66,14 @@ const router = createRouter({
     },
   ],
 });
+
+if (stage) {
+  router.addRoute({
+    path: "/profile",
+    name: "profile",
+    component: () => import("../views/ProfileView.vue"),
+  });
+}
 
 router.beforeEach((to, from, next) => {
   console.log("beforeEach");

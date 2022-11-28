@@ -3,6 +3,7 @@
     <RouterLink :to="{ name: 'home' }">Home</RouterLink>
     <RouterLink to="/session">Session</RouterLink>
     <RouterLink :to="{ name: 'about' }">About</RouterLink>
+    <RouterLink v-if="!isDev" :to="{ name: 'profile' }">Profile</RouterLink>
     <RouterLink :to="{ name: 'chats' }">Chats</RouterLink>
   </div>
   <RouterView />
@@ -10,6 +11,9 @@
 
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+
+const isDev = import.meta.env.DEV;
+
 </script>
 
 <style scoped>
