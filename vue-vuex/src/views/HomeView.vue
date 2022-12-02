@@ -1,17 +1,14 @@
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, computed } from "vue";
 import { RouterView, RouterLink } from "vue-router";
 import InputSearch from "@/components/InputSearch.vue";
 import ProfileCard from "@/components/ProfileCard.vue";
 import ChatItem from "@/components/ChatItem.vue";
-import store from "@/store/store.js";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const search = ref("");
-const profile = reactive({
-  username: "Ameth Ordoñez",
-  status: "active",
-  avatar: "/avatars/avatar.jpg",
-});
 
 const channels = ref([
   { id: 1, name: "General", messages: 27 },
@@ -21,32 +18,37 @@ const channels = ref([
   { id: 5, name: "Non-work", messages: null },
   { id: 6, name: "Atención a clientes", messages: 120 },
 ]);
-</script>
 
-<template>
-<div class="home">
-  <aside>
-    <InputSearch v-model="search" />
-    <ProfileCard
-      :avatar="profile.avatar"
-      :username="store.username"
-      :status="profile.status"
-    />
-    <RouterLink to="/" class="channels-title">Canales <Icon icon="carbon:hashtag" /></RouterLink>
-    <div class="channels">
-      <ChatItem
-        v-for="channel in channels"
-        :key="channel.id"
-        :id="channel.id"
-        :name="channel.name"
-        :messages="channel.messages"
+const { avatar, username, status } = store.getters;
+
+</script> 
+
+<template> 
+  <div class="home">
+    <aside>
+      <InputSearch v-model="search" />
+      <ProfileCard
+        :avatar="avatar"
+        :username="username"
+        :status="status"
       />
-    </div>
-  </aside>
-  <main>
-    <RouterView />
-  </main>
-</div>
+      <RouterLink to="/" class="channels-title"
+        >Canales <Icon icon="carbon:hashtag"
+      /></RouterLink>
+      <div class="channels">
+        <ChatItem
+          v-for="channel in channels"
+          :key="channel.id"
+          :id="channel.id"
+          :name="channel.name"
+          :messages="channel.messages"
+        />
+      </div>
+    </aside>
+    <main>
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <style lang="scss" scoped>

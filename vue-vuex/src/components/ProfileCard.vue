@@ -1,5 +1,6 @@
 <script setup>
 import { toRefs, computed } from "vue";
+import { RouterLink } from "vue-router";
 
 const props = defineProps({
   avatar: {
