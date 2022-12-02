@@ -1,5 +1,13 @@
 <script setup>
-import store from "../store/store";
+import { useStore } from "vuex";
+
+const store = useStore();
+
+const { username } = store.getters;
+
+const update = (value) => {
+  store.commit("updateUsername", value);
+};
 </script>
 
 <template>
@@ -10,8 +18,8 @@ import store from "../store/store";
       <input
         type="text"
         placeholder="Jane Smith"
-        :value="store.username"
-        @input="store.updateUsername($event.target.value)"
+        :value="username"
+        @input="update($event.target.value)"
       />
       <button>Acceder</button>
     </div>

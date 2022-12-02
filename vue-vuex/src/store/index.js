@@ -7,16 +7,21 @@ import { createStore } from "vuex";
 
 const store = createStore({
   state: {
-    username: "John.Doe",
+    username: "John.Doess",
     status: "active",
     avatar: "/avatars/avatar.jpg",
   },
   getters: {
-    username: (state) => state.username.split(".")[0],
+    username: (state) => state.username,
     status: (state) => state.status,
     avatar: (state) => state.avatar,
     },
-    mutations: { },
+    mutations: {
+        updateUsername: (state, newUsername) => {
+            console.log(newUsername);
+            state.username = newUsername;
+        }
+    },
 
 });
 
