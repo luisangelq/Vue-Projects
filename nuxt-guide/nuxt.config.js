@@ -15,10 +15,14 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [{ src: "https://cdn.tailwindcss.com" }]
   },
 
+
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [
+    './assets/css/main.css',
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -29,14 +33,26 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     '@nuxt/postcss8',
+
   ],
   build: {
     postcss: {
+      // Add plugin names as key and arguments as value
+      // Install them before as dependencies with npm or yarn
       plugins: {
-        tailwindcss: {},
-        autoprefixer: {},
+        // Disable a plugin by passing false as value
+        'postcss-url': false,
+        'postcss-nested': {},
+        'postcss-responsive-type': {},
+        'postcss-hexrgba': {}
       },
-    },
+      preset: {
+        // Change the postcss-preset-env settings
+        autoprefixer: {
+          grid: true
+        }
+      }
+    }
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
