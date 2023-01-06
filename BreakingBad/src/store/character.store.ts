@@ -72,7 +72,10 @@ const characterStore = reactive<Store>({
   },
 
   //Methods for ids
-  loadCharacterById: () => {},
+  loadCharacterById: () => {
+    characterStore.ids.isLoading = true;
+    characterStore
+  },
   checkIdInStore: (id: string) => {
     return true;
   },

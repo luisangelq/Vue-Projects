@@ -26,7 +26,7 @@ const search = ref('')
     <RouterLink to="/" class="channels-title">Canales <Icon icon="carbon:hashtag" /></RouterLink>
     <div class="channels">
       <ChatItem
-        v-for="channel in channelsStore.channels"
+        v-for="channel in channelsStore.getChannelsBySearch(search)"
         :key="channel.id"
         :id="channel.id"
         :name="channel.name"
