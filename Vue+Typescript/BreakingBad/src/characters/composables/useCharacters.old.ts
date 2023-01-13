@@ -1,5 +1,5 @@
 import { onMounted, ref } from "vue";
-import breakingBadApi from "@/api/breakingBadApi";
+import apiUrl from "@/api/axiosUrl";
 import type { Character } from "../interfaces/character";
 import axios from "axios";
 
@@ -8,7 +8,7 @@ const isLoading = ref<boolean>(true);
 const hasError = ref<boolean>(false);
 const errorMessage = ref<string>("");
 
-export const useCharacters = () => {
+export const useCharactersOld = () => {
   onMounted(() => {
     loadCharacters();
   });
@@ -18,7 +18,7 @@ export const useCharacters = () => {
 
     try {
       setTimeout(async () => {
-        const { data } = await breakingBadApi.get<Character>("/character");
+        const { data } = await apiUrl.get<Character>("/character");
         characters.value = data;
         isLoading.value = false;
       }, 1000);

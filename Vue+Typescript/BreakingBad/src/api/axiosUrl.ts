@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const breakingBadApi = axios.create({
+const apiUrl = axios.create({
     baseURL: 'https://rickandmortyapi.com/api/',
 });
 
-export default breakingBadApi;
+export default apiUrl;

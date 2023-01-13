@@ -5,7 +5,7 @@ import type { Result } from "../interfaces/character";
 //! 1- Normal suspense
 
 // //initialize the response api with suspense
-// const { data: characters } = await breakingBadApi.get<Character>("/character");
+// const { data: characters } = await apiUrl.get<Character>("/character");
 
 //! 2- Conposable function
 //const { isLoading, characters, hasError, errorMessage } = useCharacters();
@@ -16,12 +16,12 @@ import type { Result } from "../interfaces/character";
 
 //   return new Promise((resolve) => {
 //     setTimeout(async () => {
-//       const { data } = await breakingBadApi.get<Character>("/character");
+//       const { data } = await apiUrl.get<Character>("/character");
 //       resolve(data);
 //     }, 1000);
 //   });
 
-// const { data } = await breakingBadApi.get<Character>("/character");
+// const { data } = await apiUrl.get<Character>("/character");
 // return data;
 // };
 // const {

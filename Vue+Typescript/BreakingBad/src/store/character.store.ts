@@ -1,4 +1,4 @@
-import breakingBadApi from "@/api/breakingBadApi";
+import apiUrl from "@/api/axiosUrl";
 import type { Character, Result } from "@/characters/interfaces/character";
 import { reactive } from "vue";
 
@@ -25,7 +25,7 @@ interface Store {
   charactersError: (error: string) => void;
 
   //Methods for ids
-  loadCharacterById: () => void;
+  loadCharacterById: (id: string) => Promise<Result>;
   checkIdInStore: (id: string) => boolean;
   loadedCharacterById: (character: Result) => void;
 }
@@ -49,14 +49,17 @@ const characterStore = reactive<Store>({
   },
   ids: {
     list: {},
-    isLoading: false,
+    isLoading: true,
     isError: false,
     errorMessage: null,
   },
 
   //Methods
   loadCharacters: async (): Promise<Character> => {
-    const { data } = await breakingBadApi.get<Character>("/character");
+    if (characterStore.characters.count > 0) {
+      return characterStore.characters.list;
+    }
+    const { data } = await apiUrl.get<Character>("/character");
 
     return data;
   },
@@ -72,14 +75,27 @@ const characterStore = reactive<Store>({
   },
 
   //Methods for ids
-  loadCharacterById: () => {
-    characterStore.ids.isLoading = true;
-    characterStore
+  loadCharacterById: async (id: string): Promise<Result> => {
+    if (characterStore.checkIdInStore(id)) {
+      return characterStore.ids.list[id];
+    }
+
+    const { data } = await apiUrl.get<Result>(`/character/${id}`);
+    console.log(data);
+
+    return data;
   },
   checkIdInStore: (id: string) => {
-    return true;
+    if (characterStore.ids.list[id]) {
+      return true;
+    }
+
+    return false;
   },
-  loadedCharacterById: (character: Result) => {},
+  loadedCharacterById: (character: Result) => {
+    characterStore.ids.list[character.id] = character;
+    characterStore.ids.isLoading = false;
+  },
 });
 
 export default characterStore;
